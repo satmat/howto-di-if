@@ -14,11 +14,14 @@ func main() {
 	// mainではそのハンドラをWebAPIフレームワークに登録する処理で済むはずだが、
 	// 説明のため、main()から直接読んでいる。
 
+	// (1) フェイクにしたいメソッドを定義したInterface型を引数に持つ場合
 	service.GetServiceData(s, "key1")
 
-	d := service.NewDB(s)
+	// (2) フェイクにしたいメソッドを定義したInterfaceをメンバに持つ構造体をレシーバに持つ場合
+	d := service.NewService(s)
 	d.PutServiceData("key2", "value2")
 
+	// (3) interfaceが用意されていないため自分のコード側にラッパを実装した場合
 	sw := service.NewSessionWrapper(s)
 	sw.DeleteWrapper("key3")
 }
